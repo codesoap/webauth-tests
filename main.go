@@ -107,7 +107,10 @@ func getSecret(username string) string {
 	defer f.Close()
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
-		return strings.SplitAfterN(scanner.Text(), ":", 2)[1]
+		text := scanner.Text()
+		if strings.SplitAfterN(text, ":", 2)[0] == username + ":" {
+			return strings.SplitAfterN(text, ":", 2)[1]
+		}
 	}
 	return ""
 }
