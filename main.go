@@ -22,7 +22,7 @@ func main() {
 }
 
 func serveIndex(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Index\n")
+	http.ServeFile(w, r, "html/index.html")
 }
 
 func serveRegistration(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +54,7 @@ func serveLogin(w http.ResponseWriter, r *http.Request) {
 				SameSite: http.SameSiteStrictMode,
 			}
 			http.SetCookie(w, jwt_cookie)
-			fmt.Fprintf(w, "Login succeeded; token will be set as a cookie\n")
+			http.Redirect(w, r, "/", 303)
 		} else {
 			fmt.Fprintf(w, "Login failed\n")
 		}
